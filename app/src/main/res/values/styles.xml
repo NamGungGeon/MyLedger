@@ -1,0 +1,15 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/background</item>
+        <item name="colorPrimaryDark">@color/background</item>
+        <item name="colorAccent">@color/warning</item>
+    </style>
+
+    <style name="MyCheckBox" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/warning</item>
+        <item name="colorControlActivated">@color/safe</item>
+    </style>
+</resources>
