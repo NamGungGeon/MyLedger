@@ -14,11 +14,11 @@ import java.util.List;
 import site.cpsp.myledger.DetailLedgerActivity;
 import site.cpsp.myledger.R;
 import site.cpsp.myledger.data.LedgerDataManager;
+import site.cpsp.myledger.data.LedgerFactory;
 
 public class PersonListAdapter extends RecyclerView.Adapter<PersonListAdapter.VHolder> {
     private LedgerDataManager ledgerManager;
     private Context context;
-    private LayoutInflater inflater;
     private List<String> names;
 
 
@@ -26,7 +26,6 @@ public class PersonListAdapter extends RecyclerView.Adapter<PersonListAdapter.VH
         this.context= context;
         this.ledgerManager= ledgerDataManager;
         this.names= ledgerDataManager.getNames();
-        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @NonNull
@@ -48,18 +47,19 @@ public class PersonListAdapter extends RecyclerView.Adapter<PersonListAdapter.VH
         TextView empty= holder.empty;
         int subtract= ledgerManager.getPersonTotalBond(tName)- ledgerManager.getPersonTotalDebt(tName);
         if(subtract>0){
-            bond.setText("에게 "+ String.valueOf(Math.abs(subtract))+ "원을 받아야 합니다");
+            bond.setText("에게 "+ LedgerFactory.priceDivider(Math.abs(subtract))+ "원을 받아야 합니다");
             debt.setVisibility(View.GONE);
             empty.setVisibility(View.GONE);
             holder.itemView.setBackground(context.getDrawable(R.drawable.leftbordersafe));
         }else if(subtract<0){
-            debt.setText("에게 "+ String.valueOf(Math.abs(subtract))+ "원을 갚아야 합니다");
+            debt.setText("에게 "+ LedgerFactory.priceDivider(Math.abs(subtract))+ "원을 갚아야 합니다");
             bond.setVisibility(View.GONE);
             empty.setVisibility(View.GONE);
             holder.itemView.setBackground(context.getDrawable(R.drawable.leftborderwarning));
         }else{
             bond.setVisibility(View.GONE);
             debt.setVisibility(View.GONE);
+            empty.setText("깔ㅡ끔합니다!");
             holder.itemView.setBackground(context.getDrawable(R.drawable.leftbordernormal));
         }
 

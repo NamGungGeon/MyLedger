@@ -21,11 +21,7 @@ public class FileLedgerDataManager implements LedgerDataManager {
 
     private FileLedgerDataManager(Context context) throws Exception{
         this.context= context;
-        repository= new File(context.getFilesDir(), fileName);
-        if(!repository.exists()){
-            repository.createNewFile();
-        }
-        readFromFile();
+        init();
     }
     public static FileLedgerDataManager getInst(Context context) throws Exception{
         if(inst== null)
@@ -33,16 +29,17 @@ public class FileLedgerDataManager implements LedgerDataManager {
 
         return inst;
     }
-
-    private void readFromFile() throws Exception{
-        //flush ledgerList
-        for(LedgerData data: ledgerList){
-            ledgerList.remove(data);
+    private void init() throws Exception{
+        repository= new File(context.getFilesDir(), fileName);
+        if(!repository.exists()){
+            repository.createNewFile();
         }
-        //new ledgerList is empty
+        readFromFile();
+    }
+    private void readFromFile() throws Exception{
+        flushList();
 
         ObjectInputStream iStream= null;
-
         try{
             iStream= new ObjectInputStream(new FileInputStream(repository));
             LedgerData readObj;
@@ -78,19 +75,34 @@ public class FileLedgerDataManager implements LedgerDataManager {
         }
         return true;
     }
+    private void flushList(){
+        //flush ledgerList
+        while(ledgerList.size()>0){
+            ledgerList.remove(0);
+        }
+        //new ledgerList is empty
+    }
 
     @Override
-    public void flushData(Callback callback) {
+    public void removeAllData(Callback callback) {
         try {
+            if(!repository.exists()){
+                callback.call(true);
+                flushList();
+                return;
+            }
             boolean result= repository.delete();
-            if(!result)
+            if(!result){
                 callback.call(false);
+                return;
+            }
+            init();
             readFromFile();
+            callback.call(true);
         } catch (Exception e) {
             callback.call(false);
             e.printStackTrace();
         }
-        callback.call(true);
     }
 
     @Override
@@ -98,7 +110,7 @@ public class FileLedgerDataManager implements LedgerDataManager {
         int bonds= 0;
         List<String> names= getNames();
         for(String name: names){
-            bonds+= getPersonTotalBond(name)- getPersonTotalDebt(name)>0 ? getPersonTotalBond(name): 0;
+            bonds+= getPersonTotalBond(name)- getPersonTotalDebt(name)>0 ? getPersonTotalBond(name)- getPersonTotalDebt(name): 0;
         }
         return bonds;
     }
@@ -108,7 +120,7 @@ public class FileLedgerDataManager implements LedgerDataManager {
         int debts= 0;
         List<String> names= getNames();
         for(String name: names){
-            debts+= getPersonTotalDebt(name)- getPersonTotalBond(name)>0 ? getPersonTotalDebt(name): 0;
+            debts+= getPersonTotalDebt(name)- getPersonTotalBond(name)>0 ? getPersonTotalDebt(name)- getPersonTotalBond(name): 0;
         }
         return debts;
     }
@@ -161,7 +173,7 @@ public class FileLedgerDataManager implements LedgerDataManager {
                 names.add(data.getName());
             }
         }
-        return names;
+        return LedgerFactory.sortByName(names);
     }
 
     @Override
@@ -171,6 +183,7 @@ public class FileLedgerDataManager implements LedgerDataManager {
             if(data.getName().equals(name))
                 list.add(new LedgerData(data.getName(), data.getTime(), data.getDescription(), data.getPrice(), data.isBond()));
         }
-        return list;
+
+        return LedgerFactory.sortByTime(list);
     }
 }

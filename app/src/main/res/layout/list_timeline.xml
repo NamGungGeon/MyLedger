@@ -10,10 +10,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/pList_name"
-        android:text="이름"
+        android:id="@+id/tList_desc"
+        android:text="항목"
         android:textColor="@color/fontbasic"
-        android:textSize="16dp"
+        android:textSize="14dp"
         />
     <View
         android:layout_width="wrap_content"
@@ -24,26 +24,26 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/safe"
-            android:id="@+id/pList_totalBond"
-            android:text="받을돈"
+            android:id="@+id/tList_status"
+            android:text="status"
             android:layout_marginRight="5dp"
             android:textSize="12dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/warning"
-            android:text="갚을돈"
-            android:id="@+id/pList_totalDebut"
-            android:textSize="12dp"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#99FFFFFF"
-            android:text="-"
-            android:id="@+id/pList_empty"
+            android:textColor="@color/divider"
+            android:text="rest"
+            android:gravity="right"
+            android:id="@+id/tList_result"
             android:textSize="12dp"/>
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/divider"
+        android:text="rest"
+        android:id="@+id/tList_time"
+        android:textSize="12dp"/>
 </LinearLayout>

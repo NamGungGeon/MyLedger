@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import butterknife.OnClick;
 import site.cpsp.myledger.adapters.PersonListAdapter;
 import site.cpsp.myledger.data.FileLedgerDataManager;
 import site.cpsp.myledger.data.LedgerDataManager;
+import site.cpsp.myledger.data.LedgerFactory;
 import site.cpsp.myledger.utils.PermissionUtils;
 import site.cpsp.myledger.utils.ViewUtils;
 
@@ -29,7 +31,7 @@ public class TotalSummaryActivity extends AppCompatActivity {
     RecyclerView personList;
 
     @BindView(R.id.total_status)
-    TextView tStatus;
+    ImageView iStatus;
 
     @BindView(R.id.total_wBond)
     ViewGroup wBond;
@@ -84,18 +86,18 @@ public class TotalSummaryActivity extends AppCompatActivity {
 
         int subtract= ledgerManager.getTotalBond()- ledgerManager.getTotalDebt();
         if(subtract!=0){
-            tDebt.setText(String.valueOf(ledgerManager.getTotalDebt())+ " 원");
-            tBond.setText(String.valueOf(ledgerManager.getTotalBond())+ " 원");
+            tDebt.setText(LedgerFactory.priceDivider(ledgerManager.getTotalDebt())+ " 원");
+            tBond.setText(LedgerFactory.priceDivider(ledgerManager.getTotalBond())+ " 원");
             wEmpty.setVisibility(View.GONE);
             if(subtract>0){
-                tStatus.setText("^ _ ^");
+                iStatus.setBackground(getDrawable(R.drawable.happyface));
             }else{
-                tStatus.setText("T _ T");
+                iStatus.setBackground(getDrawable(R.drawable.sadface));
             }
         }else{
             wDebt.setVisibility(View.GONE);
             wBond.setVisibility(View.GONE);
-            tStatus.setText("ㅇ _ ㅇ");
+            iStatus.setBackground(getDrawable(R.drawable.normalface));
         }
     }
 

@@ -1,171 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/background">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="장부 추가"
-            android:textColor="@color/fontbasic"
-            android:textSize="20dp" />
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/divider"/>
-
-    <!-- Inputs -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/fontbasic"
-                android:textSize="15dp"
-                android:text="이름"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:hint="이름은 중복될 수 없습니다"
-                android:textColorHint="@color/divider"
-                android:background="@drawable/bottomborder"
-                android:textColor="@color/fontbasic"
-                android:id="@+id/adder_name"
-                android:padding="2dp"
-                android:textSize="15dp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/fontbasic"
-                android:textSize="15dp"
-                android:text="사유"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:hint="해당 거래내역의 사유를 입력하세요"
-                android:textColorHint="@color/divider"
-                android:background="@drawable/bottomborder"
-                android:id="@+id/adder_description"
-                android:textColor="@color/fontbasic"
-                android:padding="2dp"
-                android:textSize="15dp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/fontbasic"
-                android:textSize="15dp"
-                android:text="타입"/>
-
-            <CheckBox
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:hint="내가 갚을 돈입니다"
-                android:padding="2dp"
-                android:id="@+id/adder_type"
-                android:textColorHint="@color/fontbasic"
-                android:textSize="15dp"
-                android:theme="@style/MyCheckBox" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/fontbasic"
-                android:textSize="15dp"
-                android:text="시간"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:hint="해당 거래내역의 시간을 입력하세요"
-                android:textColorHint="@color/divider"
-                android:background="@drawable/bottomborder"
-                android:textColor="@color/fontbasic"
-                android:id="@+id/adder_time"
-                android:padding="2dp"
-                android:textSize="15dp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/fontbasic"
-                android:textSize="15dp"
-                android:text="금액"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:hint="금액을 원 단위로 입력하세요"
-                android:inputType="numberDecimal"
-                android:textColorHint="@color/divider"
-
-                android:id="@+id/adder_price"
-                android:background="@drawable/bottomborder"
-                android:textColor="@color/fontbasic"
-                android:padding="2dp"
-                android:textSize="15dp"
-                />
-        </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp">
             <TextView
-
-                android:paddingRight="16dp"
-                android:paddingLeft="16dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/roundsquare"
+                android:layout_centerVertical="true"
+                android:text="장부 추가"
                 android:textColor="@color/fontbasic"
-                android:id="@+id/adder_submitBtn"
-                android:text="추가"
-                android:textSize="15dp"/>
+                android:textSize="20dp" />
         </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/divider"/>
+
+        <!-- Inputs -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/fontbasic"
+                    android:textSize="15dp"
+                    android:text="이름"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:padding="8dp"
+                    android:hint="추가할 사용자의 이름을 입력하세요"
+                    android:textColorHint="@color/divider"
+                    android:background="@drawable/bottomborder"
+                    android:textColor="@color/fontbasic"
+                    android:id="@+id/adder_name"
+                    android:textSize="15dp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/fontbasic"
+                    android:textSize="15dp"
+                    android:text="사유"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:padding="8dp"
+                    android:hint="해당 거래내역의 사유를 입력하세요"
+                    android:textColorHint="@color/divider"
+                    android:background="@drawable/bottomborder"
+                    android:id="@+id/adder_description"
+                    android:textColor="@color/fontbasic"
+                    android:textSize="15dp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/fontbasic"
+                    android:textSize="15dp"
+                    android:text="타입"/>
+
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:hint="상대방이 나에게 돈을 빌리거나 내가 갚는 돈입니다"
+                    android:id="@+id/adder_type"
+                    android:textColorHint="@color/fontbasic"
+                    android:textSize="12dp"
+                    android:theme="@style/MyCheckBox" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/fontbasic"
+                    android:textSize="15dp"
+                    android:text="시간"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:padding="8dp"
+                    android:textColorHint="@color/divider"
+                    android:background="@drawable/bottomborder"
+                    android:textColor="@color/fontbasic"
+                    android:id="@+id/adder_time"
+                    android:textSize="15dp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/fontbasic"
+                    android:textSize="15dp"
+                    android:text="금액"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:padding="8dp"
+                    android:hint="금액을 원 단위로 입력하세요"
+                    android:inputType="numberDecimal"
+                    android:textColorHint="@color/divider"
+
+                    android:id="@+id/adder_price"
+                    android:background="@drawable/bottomborder"
+                    android:textColor="@color/fontbasic"
+                    android:textSize="15dp"
+                    />
+            </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+    </LinearLayout>
+    <Button
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/round"
+        android:text="+"
+        android:textSize="30dp"
+        android:textColor="@color/fontbasic"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:id="@+id/adder_submitBtn"
+        android:elevation="10dp"/>
+
+</RelativeLayout>

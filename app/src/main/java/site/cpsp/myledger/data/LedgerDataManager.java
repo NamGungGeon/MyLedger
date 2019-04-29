@@ -9,7 +9,7 @@ public interface LedgerDataManager {
     }
     List<LedgerData> ledgerList = new ArrayList<>();
 
-    void flushData(Callback callback);
+    void removeAllData(Callback callback);
     int getTotalBond();
     int getTotalDebt();
     int getPersonTotalBond(String name);

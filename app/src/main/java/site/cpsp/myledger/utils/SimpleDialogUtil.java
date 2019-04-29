@@ -2,13 +2,17 @@ package site.cpsp.myledger.utils;
 
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.DatePicker;
 
 /**
  * Created by WINDOWS7 on 2018-08-15.
@@ -93,6 +97,20 @@ public class SimpleDialogUtil extends DialogFragment {
 
     public static ProgressDialog showProgressDialog(Activity activity, String title, String message){
         ProgressDialog dialog = ProgressDialog.show(activity, title, message, true);
+        dialog.show();
+        return dialog;
+    }
+    public static DatePickerDialog showDatePickerDialog(Context context, DatePickerDialog.OnDateSetListener listener){
+        DatePickerDialog dialog= new DatePickerDialog(context, listener,
+                Integer.valueOf(TimeUtils.getCurrentYear()),
+                Integer.valueOf(TimeUtils.getCurrentMonth()),
+                Integer.valueOf(TimeUtils.getCurrentDay()));
+        dialog.show();
+        return dialog;
+    }
+    public static TimePickerDialog showTimePickerDialog(Context context, TimePickerDialog.OnTimeSetListener listener){
+        TimePickerDialog dialog= new TimePickerDialog(context, listener, Integer.valueOf(TimeUtils.getCurrentHour()), Integer.valueOf(TimeUtils.getCurrentMinute()), true);
+        dialog.show();
         return dialog;
     }
 }
