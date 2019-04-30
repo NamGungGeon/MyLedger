@@ -13,12 +13,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import site.cpsp.myledger.data.FileLedgerDataManager;
 import site.cpsp.myledger.data.LedgerData;
 import site.cpsp.myledger.data.LedgerDataManager;
+import site.cpsp.myledger.utils.AdmobUtil;
 import site.cpsp.myledger.utils.SimpleDialogUtil;
 import site.cpsp.myledger.utils.TimeUtils;
 
@@ -35,6 +38,9 @@ public class AddLedgerDataActivity extends AppCompatActivity {
     @BindView(R.id.adder_price)
     EditText ePrice;
 
+    @BindView(R.id.adder_ad)
+    AdView adView;
+
     private String tName;
 
     @Override
@@ -49,6 +55,8 @@ public class AddLedgerDataActivity extends AppCompatActivity {
         initUI();
     }
     private void initUI(){
+        AdmobUtil.getInst(this, null).loadBannerAd(adView);
+
         cType.setOnCheckedChangeListener((compoundButton, b) -> {
             if(b){
                 cType.setHint("상대방이 빌린 돈을 갚거나 내가 빌리는 돈입니다");

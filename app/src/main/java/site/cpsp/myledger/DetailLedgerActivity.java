@@ -7,9 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,7 +18,8 @@ import butterknife.OnClick;
 import site.cpsp.myledger.adapters.PersonDeatilAdapter;
 import site.cpsp.myledger.data.FileLedgerDataManager;
 import site.cpsp.myledger.data.LedgerDataManager;
-import site.cpsp.myledger.data.LedgerFactory;
+import site.cpsp.myledger.utils.AdmobUtil;
+import site.cpsp.myledger.utils.LedgerUtil;
 
 public class DetailLedgerActivity extends AppCompatActivity {
     @BindView(R.id.detail_name)
@@ -28,6 +30,8 @@ public class DetailLedgerActivity extends AppCompatActivity {
     RecyclerView timeLine;
     @BindView(R.id.detail_status)
     ImageView iStatus;
+    @BindView(R.id.detail_ad)
+    AdView adView;
 
 
     private String targetName;
@@ -66,17 +70,19 @@ public class DetailLedgerActivity extends AppCompatActivity {
         return true;
     }
     private void initUI(){
+        AdmobUtil.getInst(this, null).loadBannerAd(adView);
+
         tName.setText(targetName+ " 상세보기");
         timeLine.setLayoutManager(new LinearLayoutManager(this));
         timeLine.setAdapter(new PersonDeatilAdapter(ledgerDataManager, this, targetName));
 
         int subtract= ledgerDataManager.getPersonTotalBond(targetName)- ledgerDataManager.getPersonTotalDebt(targetName);
         if(subtract>0){
-            tSummary.setText("내가 "+ LedgerFactory.priceDivider(subtract)+ "원을 받아야 합니다");
+            tSummary.setText("내가 "+ LedgerUtil.priceDivider(subtract)+ "원을 받아야 합니다");
             tSummary.setTextColor(getResources().getColor(R.color.safe));
             iStatus.setBackground(getDrawable(R.drawable.happyface));
         }else if(subtract<0){
-            tSummary.setText("내가 "+ LedgerFactory.priceDivider(subtract)+ "원을 갚아야 합니다");
+            tSummary.setText("내가 "+ LedgerUtil.priceDivider(subtract)+ "원을 갚아야 합니다");
             tSummary.setTextColor(getResources().getColor(R.color.warning));
             iStatus.setBackground(getDrawable(R.drawable.sadface));
         }else{

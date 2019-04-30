@@ -54,6 +54,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@drawable/pannel"
+            android:id="@+id/total_summaryPannel"
             android:layout_margin="10dp">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -130,12 +131,23 @@
                         android:textColor="@color/fontbasic"
                         android:id="@+id/total_tEmpry"
                         android:textAlignment="center"
-                        android:textSize="14dp"
-                        android:text="깔ㅡ끔"/>
+                        android:textSize="16dp"
+                        android:text="깔ㅡ끔합니다!"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
+        <com.google.android.gms.ads.AdView
+            android:layout_margin="10dp"
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            ads:adSize="BANNER"
+            android:id="@+id/total_ad"
+            android:background="@color/background"
+            ads:adUnitId="ca-app-pub-5333091392909120/7577330551"/>
 
         <!-- 장부리스트 -->
         <TextView

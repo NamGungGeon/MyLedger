@@ -5,12 +5,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdView;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import site.cpsp.myledger.data.FileLedgerDataManager;
+import site.cpsp.myledger.utils.AdmobUtil;
 import site.cpsp.myledger.utils.SimpleDialogUtil;
 
 public class SettingActivity extends AppCompatActivity {
+
+    @BindView(R.id.setting_ad)
+    AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,13 +27,19 @@ public class SettingActivity extends AppCompatActivity {
         init();
     }
     private void init(){
-
         initUI();
     }
     private void initUI(){
+        AdmobUtil.getInst(this, null).loadBannerAd(adView);
     }
 
 
+    @OnClick(R.id.setting_donationBtn)
+    void donation(){
+        Toast.makeText(this, "감사합니다.\n광고만 봐주셔도 감개무량합니다!", Toast.LENGTH_SHORT).show();
+        ProgressDialog dialog= SimpleDialogUtil.showProgressDialog(this, "전면광고 로드 중입니다", "잠시만 기다려 주세요!");
+        AdmobUtil.getInst(this, () -> dialog.dismiss()).loadFullSizeAd();
+    }
     @OnClick(R.id.setting_resetAllBtn)
     void resetAllData(){
         SimpleDialogUtil dialog= new SimpleDialogUtil();

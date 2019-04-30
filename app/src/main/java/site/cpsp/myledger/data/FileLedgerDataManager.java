@@ -13,6 +13,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import site.cpsp.myledger.utils.LedgerUtil;
+
 public class FileLedgerDataManager implements LedgerDataManager {
     private File repository;
     private final String fileName= "ledgerData.txt";
@@ -106,6 +108,29 @@ public class FileLedgerDataManager implements LedgerDataManager {
     }
 
     @Override
+    public void removeData(String name, Callback callback) {
+        List<LedgerData> targetLedgers= getPersonDataList(name);
+        ledgerList.removeAll(targetLedgers);
+        boolean success= saveToFile();
+        callback.call(success);
+
+        if(!success)
+            //undo
+            ledgerList.addAll(targetLedgers);
+    }
+
+    @Override
+    public void removeData(LedgerData ledger, Callback callback) {
+        ledgerList.remove(ledger);
+        boolean success= saveToFile();
+        callback.call(success);
+
+        if(!success)
+            //undo
+            ledgerList.add(ledger);
+    }
+
+    @Override
     public int getTotalBond() {
         int bonds= 0;
         List<String> names= getNames();
@@ -173,7 +198,7 @@ public class FileLedgerDataManager implements LedgerDataManager {
                 names.add(data.getName());
             }
         }
-        return LedgerFactory.sortByName(names);
+        return LedgerUtil.sortByName(names);
     }
 
     @Override
@@ -181,9 +206,9 @@ public class FileLedgerDataManager implements LedgerDataManager {
         List<LedgerData> list= new ArrayList<>();
         for(LedgerData data: ledgerList){
             if(data.getName().equals(name))
-                list.add(new LedgerData(data.getName(), data.getTime(), data.getDescription(), data.getPrice(), data.isBond()));
+                list.add(data);
         }
 
-        return LedgerFactory.sortByTime(list);
+        return LedgerUtil.sortByTime(list);
     }
 }

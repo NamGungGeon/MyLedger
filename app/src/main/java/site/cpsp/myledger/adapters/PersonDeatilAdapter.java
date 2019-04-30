@@ -1,28 +1,33 @@
 package site.cpsp.myledger.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import site.cpsp.myledger.R;
 import site.cpsp.myledger.data.LedgerData;
 import site.cpsp.myledger.data.LedgerDataManager;
-import site.cpsp.myledger.data.LedgerFactory;
+import site.cpsp.myledger.utils.LedgerUtil;
+import site.cpsp.myledger.utils.SimpleDialogUtil;
 
 public class PersonDeatilAdapter extends RecyclerView.Adapter<PersonDeatilAdapter.Holder>{
 
     private LedgerDataManager ledgerDataManager;
-    private Context context;
+    private AppCompatActivity context;
     private String tName;
     private List<LedgerData> ledgers;
 
-    public PersonDeatilAdapter(LedgerDataManager ledgerDataManager, Context context, String tName) {
+    public PersonDeatilAdapter(LedgerDataManager ledgerDataManager, AppCompatActivity context, String tName) {
         this.ledgerDataManager = ledgerDataManager;
         this.context = context;
         this.tName = tName;
@@ -47,14 +52,33 @@ public class PersonDeatilAdapter extends RecyclerView.Adapter<PersonDeatilAdapte
         desc.setText(currentData.getDescription().equals("")? "?": currentData.getDescription());
         time.setText(currentData.getTime());
         if(currentData.isBond()){
-            status.setText("내가 "+ LedgerFactory.priceDivider(currentData.getPrice())+ "원을 빌려주었(갚았)습니다");
+            status.setText("내가 "+ LedgerUtil.priceDivider(currentData.getPrice())+ "원을 빌려주었(갚았)습니다");
             status.setTextColor(context.getResources().getColor(R.color.safe));
             holder.itemView.setBackground(context.getDrawable(R.drawable.leftbordersafe));
         }else{
-            status.setText("내가 "+ LedgerFactory.priceDivider(currentData.getPrice())+ "원을 빌렸(돌려받았)습니다");
+            status.setText("내가 "+ LedgerUtil.priceDivider(currentData.getPrice())+ "원을 빌렸(돌려받았)습니다");
             status.setTextColor(context.getResources().getColor(R.color.warning));
             holder.itemView.setBackground(context.getDrawable(R.drawable.leftborderwarning));
         }
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                SimpleDialogUtil dialog= new SimpleDialogUtil();
+                dialog.setValue("이 기록을 삭제하시겠습니까?", "예", "아니오", ()->{
+                    ledgerDataManager.removeData(currentData, (isSuccess -> {
+                        if(isSuccess){
+                            Toast.makeText(context, "삭제되었습니다", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                            context.recreate();
+                        }else{
+                            Toast.makeText(context, "삭제 실패. 다시 시도하세요.", Toast.LENGTH_SHORT).show();
+                        }
+                    }));
+                }, null);
+                dialog.show(context.getSupportFragmentManager(), "");
+                return false;
+            }
+        });
         result.setText("");
     }
 

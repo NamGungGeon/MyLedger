@@ -10,6 +10,8 @@ public interface LedgerDataManager {
     List<LedgerData> ledgerList = new ArrayList<>();
 
     void removeAllData(Callback callback);
+    void removeData(String name, Callback callback);
+    void removeData(LedgerData ledger, Callback callback);
     int getTotalBond();
     int getTotalDebt();
     int getPersonTotalBond(String name);

@@ -8,12 +8,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,9 +20,10 @@ import butterknife.OnClick;
 import site.cpsp.myledger.adapters.PersonListAdapter;
 import site.cpsp.myledger.data.FileLedgerDataManager;
 import site.cpsp.myledger.data.LedgerDataManager;
-import site.cpsp.myledger.data.LedgerFactory;
+import site.cpsp.myledger.utils.AdmobUtil;
+import site.cpsp.myledger.utils.LedgerUtil;
 import site.cpsp.myledger.utils.PermissionUtils;
-import site.cpsp.myledger.utils.ViewUtils;
+import site.cpsp.myledger.utils.SimpleDialogUtil;
 
 public class TotalSummaryActivity extends AppCompatActivity {
 
@@ -46,6 +46,11 @@ public class TotalSummaryActivity extends AppCompatActivity {
     @BindView(R.id.total_tEmpry)
     TextView tEmpty;
 
+    @BindView(R.id.total_ledgerAddBtn)
+    View addBtn;
+    @BindView(R.id.total_ad)
+    AdView adView;
+
     private int requestCode;
     private LedgerDataManager ledgerManager;
     @Override
@@ -53,30 +58,59 @@ public class TotalSummaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_totalsummary);
         ButterKnife.bind(this);
+        AdmobUtil.getInst(getApplicationContext(), null).loadFullSizeAd();
 
         if(!PermissionUtils.getInst(this).isAllowPermission()){
             requestCode= PermissionUtils.getInst(this).requestPermission();
+            setState(false);
         }else{
+            setState(true);
             initUI();
         }
 
     }
 
+    private void setState(boolean enable){
+        int state= enable? View.VISIBLE : View.GONE;
+
+        personList.setVisibility(state);
+        iStatus.setVisibility(state);
+        wBond.setVisibility(state);
+        tBond.setVisibility(state);
+        wDebt.setVisibility(state);
+        tDebt.setVisibility(state);
+        wEmpty.setVisibility(state);
+        tEmpty.setVisibility(state);
+        addBtn.setVisibility(state);
+    }
 
     private void initUI(){
+        AdmobUtil.getInst(this, null).loadBannerAd(adView);
+
         initLedgerManager();
         if(ledgerManager!= null){
             initPersonList();
             initSummary();
+        }else{
+            setState(false);
         }
     }
     private void initLedgerManager(){
         try {
             ledgerManager= FileLedgerDataManager.getInst(getApplicationContext());
         } catch (Exception e) {
+            setState(false);
             e.printStackTrace();
             Toast.makeText(this, "파일 정보를 읽어올 수 없습니다\n"+ e.getMessage(), Toast.LENGTH_SHORT).show();
-            return;
+
+            SimpleDialogUtil dialog= new SimpleDialogUtil();
+            dialog.setValue("장부 파일을 읽어올 수 없습니다.\n장부 파일이나 앱이 손상되었을 수 있습니다.\n이 문제가 계속되면 앱을 재설치하세요."
+                    ,"닫기", null, ()->{
+                        dialog.dismiss();
+                        finish();
+                    }, null);
+            dialog.setCancelable(false);
+            dialog.show(getSupportFragmentManager(), "");
         }
     }
     private void initSummary(){
@@ -86,8 +120,8 @@ public class TotalSummaryActivity extends AppCompatActivity {
 
         int subtract= ledgerManager.getTotalBond()- ledgerManager.getTotalDebt();
         if(subtract!=0){
-            tDebt.setText(LedgerFactory.priceDivider(ledgerManager.getTotalDebt())+ " 원");
-            tBond.setText(LedgerFactory.priceDivider(ledgerManager.getTotalBond())+ " 원");
+            tDebt.setText(LedgerUtil.priceDivider(ledgerManager.getTotalDebt())+ " 원");
+            tBond.setText(LedgerUtil.priceDivider(ledgerManager.getTotalBond())+ " 원");
             wEmpty.setVisibility(View.GONE);
             if(subtract>0){
                 iStatus.setBackground(getDrawable(R.drawable.happyface));
@@ -103,7 +137,7 @@ public class TotalSummaryActivity extends AppCompatActivity {
 
     private void initPersonList(){
         personList.setLayoutManager(new LinearLayoutManager(this));
-        personList.setAdapter(new PersonListAdapter(ledgerManager, getApplicationContext()));
+        personList.setAdapter(new PersonListAdapter(ledgerManager, this));
 
     }
 
@@ -125,7 +159,10 @@ public class TotalSummaryActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int grantResults[]){
         if(!PermissionUtils.getInst(this).isAllowPermission()){
+            setState(false);
             Toast.makeText(this, "파일 권한이 없으면 장부를 사용할 수 없습니다", Toast.LENGTH_SHORT).show();
+        }else{
+            setState(true);
             initUI();
         }
     }
@@ -134,5 +171,18 @@ public class TotalSummaryActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         initUI();
+    }
+
+
+    private long lastTime= 0;
+    @Override
+    public void onBackPressed() {
+        long currentTime= System.currentTimeMillis();
+        if(currentTime- lastTime< 2000){
+            finish();
+        }else{
+            Toast.makeText(this, "뒤로가기 버튼을 한번 더 누르면 앱을 종료합니다", Toast.LENGTH_SHORT).show();
+            lastTime= currentTime;
+        }
     }
 }

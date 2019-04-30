@@ -1,17 +1,18 @@
-package site.cpsp.myledger.data;
+package site.cpsp.myledger.utils;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import site.cpsp.myledger.data.LedgerData;
 import site.cpsp.myledger.utils.TimeUtils;
 
 /**
  * Created by WINDOWS7 on 2019-04-29.
  */
 
-public class LedgerFactory {
-    private LedgerFactory(){}
+public class LedgerUtil {
+    private LedgerUtil(){}
 
     public static List<String> sortByName(List<String> names){
         Collections.sort(names, (s, t1) -> -s.compareTo(t1));

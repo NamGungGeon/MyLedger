@@ -38,7 +38,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     //External Library
-    implementation 'com.google.android.gms:play-services-ads:15.0.1'
+    implementation 'com.google.android.gms:play-services-ads:17.2.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.android.support:multidex:1.0.0'
