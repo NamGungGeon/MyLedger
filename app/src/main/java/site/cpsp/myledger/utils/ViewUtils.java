@@ -1,10 +1,11 @@
 package site.cpsp.myledger.utils;
 
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import androidx.annotation.NonNull;
 
 public class ViewUtils {
 
