@@ -44,13 +44,5 @@
         android:text="장부 초기화"
         android:textSize="16dp"
         android:id="@+id/setting_resetAllBtn"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/fontbasic"
-        android:padding="10dp"
-        android:text="개발자 후원하기"
-        android:textSize="16dp"
-        android:id="@+id/setting_donationBtn"/>
 
 </LinearLayout>

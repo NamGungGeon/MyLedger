@@ -2,37 +2,41 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="site.cpsp.myledger">
 
-    <meta-data
-        android:name="com.google.android.gms.ads.APPLICATION_ID"
-        android:value="ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
+        android:name="site.cpsp.myledger.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-5333091392909120~5255732621"/>
-        <activity android:name=".AddLedgerDataActivity">
-
-        </activity>
-        <activity android:name=".SettingActivity">
-
-        </activity>
-        <activity android:name=".DetailLedgerActivity">
-
-        </activity>
-        <activity android:name=".TotalSummaryActivity">
+            android:value="ca-app-pub-5333091392909120~5255732621" />
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".AddLedgerDataActivity"></activity>
+
+        <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".DetailLedgerActivity"></activity>
+        <activity android:name=".TotalSummaryActivity"></activity>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-5333091392909120~5255732621" />
     </application>
+
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

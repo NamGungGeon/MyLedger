@@ -159,7 +159,7 @@
             android:layout_margin="10dp"
             android:paddingLeft="10dp"
             android:background="@drawable/leftborder"/>
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:background="@drawable/pannel"
             android:layout_margin="10dp"
             android:padding="10dp"
@@ -168,8 +168,7 @@
             android:layout_height="match_parent"
             android:dividerHeight="2dp"
             android:divider="@color/background"
-            android:id="@+id/total_personList">
-        </android.support.v7.widget.RecyclerView>
+            android:id="@+id/total_personList"/>
     </LinearLayout>
 
     <Button
